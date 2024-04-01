@@ -1,0 +1,27 @@
+# Whether to enable the command line interface (CLI) for interaction.
+# Set to 'true' to enable the CLI, allowing direct interaction via command line.
+# Set to 'false' to disable the CLI, restricting interaction to other methods.
+cli: false
+
+# The port number to which the server will establish connections.
+# Ensure that this port is available and not blocked by firewalls.
+port: 6249
+
+# Determines whether a password is required for clients to connect to the server.
+# If set to 'true', clients must provide a password to establish a connection.
+require_pass: true
+
+# The password required for clients to authenticate and establish a connection.
+# This setting is applicable only if 'require_pass' is set to 'true'.
+password: "Lvg8.JjTn$_ha]b"
+
+# The time interval (in milliseconds) for saving database data from memory to disk.
+# Adjust this value according to the frequency at which data should be persisted.
+# A shorter interval may increase disk I/O but provides more frequent backups of data.
+# Conversely, a longer interval reduces disk I/O but may lead to potential data loss in case of failure.
+save_delay: 300000
+
+# Addresses allowed to connect to the server.
+# By default, connections are restricted to the localhost (127.0.0.1).
+# If you want to allow connections from other addresses, specify them in this list.
+allowed_addresses: [ "127.0.0.1" ]
