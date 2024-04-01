@@ -1,6 +1,6 @@
 # CabbaDB
 
-CabbaDB is a Java key-value database designed for simplicity and ease of use, serving both in-memory and disk-based storage requirements.
+CabbaDB is a Java key-value database designed for simplicity and ease of use, serving both in-memory and disk-based storage requirements inspired on Redis.
 
 # Setup
 
