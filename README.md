@@ -8,7 +8,7 @@ Setting up our software is a breeze. Just head over to the 'releases' section on
 
 # Using
 
-To effectively import the code for interacting and connecting with our database, you will need to incorporate our 'client' .jar file into your IDE. You can find this file in the releases section on GitHub. Inspired by Redis, you can initiate the database with the following code:
+To effectively import the code for interacting and connecting with our database, you will need to incorporate our 'client' .jar file into your IDE. You can find this file in the releases section on GitHub. you can initiate the database with the following code:
 
 ```java
 Cabba.connect("127.0.0.1", 6249, "password");
