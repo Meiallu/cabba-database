@@ -1,4 +1,4 @@
-package me.meiallu.messaging;
+package me.meiallu.cabbadb.messaging;
 
 public interface MessagingInterface {
 

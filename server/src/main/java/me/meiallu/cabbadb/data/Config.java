@@ -1,10 +1,10 @@
-package me.meiallu.data;
+package me.meiallu.cabbadb.data;
 
 import com.esotericsoftware.yamlbeans.YamlReader;
-import me.meiallu.Cabba;
-import me.meiallu.database.Database;
-import me.meiallu.database.DiskDatabase;
-import me.meiallu.database.MemoryDatabase;
+import me.meiallu.cabbadb.Cabba;
+import me.meiallu.cabbadb.database.Database;
+import me.meiallu.cabbadb.database.DiskDatabase;
+import me.meiallu.cabbadb.database.MemoryDatabase;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

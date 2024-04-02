@@ -1,4 +1,4 @@
-package me.meiallu.logging;
+package me.meiallu.cabbadb.logging;
 
 public class Logger {
 

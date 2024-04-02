@@ -1,7 +1,7 @@
-package me.meiallu.database;
+package me.meiallu.cabbadb.database;
 
 import lombok.Getter;
-import me.meiallu.Cabba;
+import me.meiallu.cabbadb.Cabba;
 
 import java.io.Serializable;
 import java.util.HashMap;

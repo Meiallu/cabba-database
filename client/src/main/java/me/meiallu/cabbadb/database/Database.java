@@ -1,14 +1,15 @@
-package me.meiallu.database;
+package me.meiallu.cabbadb.database;
 
+import com.google.gson.Gson;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import lombok.Getter;
-import me.meiallu.Cabba;
-import me.meiallu.data.Action;
-import me.meiallu.data.Request;
+import me.meiallu.cabbadb.Cabba;
+import me.meiallu.cabbadb.data.Action;
+import me.meiallu.cabbadb.data.Request;
 
-import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Set;
 
 @Getter
@@ -37,7 +38,7 @@ public class Database {
     }
 
     public Object getDelObject(String key) {
-        Request request = new Request(Action.GETDEL, name);
+        Request request = new Request(Action.GETDEL, name, key);
         return sendRequest(request);
     }
 
@@ -115,8 +116,8 @@ public class Database {
         return (boolean) sendRequest(request);
     }
 
-    public Set<String> smembers(String key) {
-        return (Set<String>) getObject(key);
+    public ArrayList<String> smembers(String key) {
+        return (ArrayList<String>) getObject(key);
     }
 
     public boolean scontains(String key, String value) {
@@ -124,40 +125,20 @@ public class Database {
         return (boolean) sendRequest(request);
     }
 
-    public Object getObject(ByteBuf byteBuf) {
-        try {
-            byte[] data = ByteBufUtil.getBytes(byteBuf);
-
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
-            ObjectInputStream objectStream = new ObjectInputStream(inputStream);
-
-            return objectStream.readObject();
-        } catch (IOException | ClassNotFoundException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
     public Object sendRequest(Request request) {
-        try {
-            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectStream = new ObjectOutputStream(byteStream);
+        String gson = new Gson().toJson(request);
+        byte[] data = gson.getBytes(StandardCharsets.UTF_8);
 
-            objectStream.writeObject(request);
-            objectStream.close();
+        ByteBuf byteBuf = Unpooled.wrappedBuffer(data);
+        Cabba.getChannel().writeAndFlush(byteBuf);
 
-            ByteBuf byteBuf = Unpooled.wrappedBuffer(byteStream.toByteArray());
-            Cabba.getChannel().writeAndFlush(byteBuf);
+        while (Cabba.getResponse() == null)
+            Thread.onSpinWait();
 
-            while (Cabba.getResponse() == null)
-                Thread.onSpinWait();
+        Object object = Cabba.getResponse().getObject();
+        Cabba.setResponse(null);
 
-            Object received = Cabba.getResponse().objects()[0];
-            Cabba.setResponse(null);
-
-            return received;
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
+        return object;
     }
 
     public Database(String name) {

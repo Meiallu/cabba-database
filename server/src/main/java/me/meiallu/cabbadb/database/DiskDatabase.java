@@ -1,6 +1,6 @@
-package me.meiallu.database;
+package me.meiallu.cabbadb.database;
 
-import me.meiallu.Cabba;
+import me.meiallu.cabbadb.Cabba;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

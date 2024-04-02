@@ -1,5 +1,6 @@
-package me.meiallu;
+package me.meiallu.cabbadb;
 
+import com.google.gson.Gson;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -11,16 +12,13 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.Getter;
 import lombok.Setter;
-import me.meiallu.data.Action;
-import me.meiallu.data.Request;
-import me.meiallu.database.Database;
-import me.meiallu.database.Handler;
-import me.meiallu.messaging.Message;
-import me.meiallu.messaging.MessagingInterface;
+import me.meiallu.cabbadb.data.Action;
+import me.meiallu.cabbadb.data.Request;
+import me.meiallu.cabbadb.database.Database;
+import me.meiallu.cabbadb.database.Handler;
+import me.meiallu.cabbadb.messaging.MessagingInterface;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public class Cabba {
@@ -32,7 +30,7 @@ public class Cabba {
     private static Channel channel;
     @Setter
     @Getter
-    private static volatile Message response;
+    private static volatile Request response;
     @Getter
     private static HashMap<String, MessagingInterface> listeners;
 
@@ -83,18 +81,11 @@ public class Cabba {
     }
 
     public static void sendRequest(Request request) {
-        try {
-            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectStream = new ObjectOutputStream(byteStream);
+        String gson = new Gson().toJson(request);
+        byte[] data = gson.getBytes(StandardCharsets.UTF_8);
 
-            objectStream.writeObject(request);
-            objectStream.close();
-
-            ByteBuf byteBuf = Unpooled.wrappedBuffer(byteStream.toByteArray());
-            Cabba.getChannel().writeAndFlush(byteBuf);
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
+        ByteBuf byteBuf = Unpooled.wrappedBuffer(data);
+        Cabba.getChannel().writeAndFlush(byteBuf);
     }
 
     public static Database getDatabase(String name) {

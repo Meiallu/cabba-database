@@ -1,4 +1,4 @@
-package me.meiallu.data;
+package me.meiallu.cabbadb.data;
 
 public enum Action {
     RENAME,
@@ -22,6 +22,7 @@ public enum Action {
     HEXISTS,
     ADD_CHANNEL,
     MESSAGE,
+    ANSWER,
     DELETE_DATABASE,
     CREATE_MEMORY,
     CREATE_DISK;

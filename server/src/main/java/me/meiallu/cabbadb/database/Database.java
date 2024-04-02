@@ -1,4 +1,4 @@
-package me.meiallu.database;
+package me.meiallu.cabbadb.database;
 
 import java.util.Set;
 

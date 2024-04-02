@@ -1,15 +1,9 @@
-package me.meiallu.data;
+package me.meiallu.cabbadb.data;
 
 import lombok.Getter;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 @Getter
-public class Request implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 6529685098267757690L;
+public class Request {
 
     private final int action;
     private final String[] values;

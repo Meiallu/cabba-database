@@ -1,4 +1,4 @@
-package me.meiallu;
+package me.meiallu.cabbadb;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -9,11 +9,11 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.Getter;
 import lombok.Setter;
-import me.meiallu.data.Config;
-import me.meiallu.database.Database;
-import me.meiallu.handler.LoginHandler;
-import me.meiallu.logging.LogType;
-import me.meiallu.logging.Logger;
+import me.meiallu.cabbadb.data.Config;
+import me.meiallu.cabbadb.database.Database;
+import me.meiallu.cabbadb.handler.LoginHandler;
+import me.meiallu.cabbadb.logging.LogType;
+import me.meiallu.cabbadb.logging.Logger;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
