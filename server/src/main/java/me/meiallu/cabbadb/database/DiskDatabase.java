@@ -1,6 +1,7 @@
 package me.meiallu.cabbadb.database;
 
 import me.meiallu.cabbadb.Cabba;
+import me.meiallu.cabbadb.util.Util;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -54,17 +55,17 @@ public class DiskDatabase implements Database, Serializable {
 
     @Override
     public void set(String key, Object object) {
-        Cabba.writeObjectToFile(object, "cabba/" + name + "/" + key);
+        Util.writeObjectToFile(object, "cabba/" + name + "/" + key);
     }
 
     @Override
     public String get(String key) {
-        return (String) Cabba.readFileToObject("cabba/" + name + "/" + key);
+        return (String) Util.readFileToObject("cabba/" + name + "/" + key);
     }
 
     @Override
     public Object getObject(String key) {
-        return Cabba.readFileToObject("cabba/" + name + "/" + key);
+        return Util.readFileToObject("cabba/" + name + "/" + key);
     }
 
     @Override
@@ -83,7 +84,7 @@ public class DiskDatabase implements Database, Serializable {
 
     @Override
     public boolean hexists(String key, String... hashKeys) {
-        Object object = Cabba.readFileToObject("cabba/" + name + "/" + key);
+        Object object = Util.readFileToObject("cabba/" + name + "/" + key);
 
         HashMap<String, String> hashMap = !(object instanceof HashMap) ?
                 new HashMap<>() :
@@ -98,19 +99,19 @@ public class DiskDatabase implements Database, Serializable {
 
     @Override
     public void hset(String key, String hashKey, String value) {
-        Object object = Cabba.readFileToObject("cabba/" + name + "/" + key);
+        Object object = Util.readFileToObject("cabba/" + name + "/" + key);
 
         HashMap<String, String> hashMap = !(object instanceof HashMap) ?
                 new HashMap<>() :
                 (HashMap<String, String>) object;
 
         hashMap.put(hashKey, value);
-        Cabba.writeObjectToFile(hashMap, "cabba/" + name + "/" + key);
+        Util.writeObjectToFile(hashMap, "cabba/" + name + "/" + key);
     }
 
     @Override
     public String hget(String key, String hashKey) {
-        Object object = Cabba.readFileToObject("cabba/" + name + "/" + key);
+        Object object = Util.readFileToObject("cabba/" + name + "/" + key);
 
         HashMap<String, String> hashMap = !(object instanceof HashMap) ?
                 new HashMap<>() :
@@ -121,43 +122,43 @@ public class DiskDatabase implements Database, Serializable {
 
     @Override
     public void hdel(String key, String hashkey) {
-        Object object = Cabba.readFileToObject("cabba/" + name + "/" + key);
+        Object object = Util.readFileToObject("cabba/" + name + "/" + key);
 
         HashMap<String, String> hashMap = !(object instanceof HashMap) ?
                 new HashMap<>() :
                 (HashMap<String, String>) object;
 
         hashMap.remove(hashkey);
-        Cabba.writeObjectToFile(hashMap, "cabba/" + name + "/" + key);
+        Util.writeObjectToFile(hashMap, "cabba/" + name + "/" + key);
     }
 
     @Override
     public void sadd(String key, String value) {
-        Object object = Cabba.readFileToObject("cabba/" + name + "/" + key);
+        Object object = Util.readFileToObject("cabba/" + name + "/" + key);
 
         Set<String> set = !(object instanceof HashSet) ?
                 new HashSet<>() :
                 (Set<String>) object;
 
         set.add(value);
-        Cabba.writeObjectToFile(set, "cabba/" + name + "/" + key);
+        Util.writeObjectToFile(set, "cabba/" + name + "/" + key);
     }
 
     @Override
     public void srem(String key, String value) {
-        Object object = Cabba.readFileToObject("cabba/" + name + "/" + key);
+        Object object = Util.readFileToObject("cabba/" + name + "/" + key);
 
         Set<String> set = !(object instanceof HashSet) ?
                 new HashSet<>() :
                 (Set<String>) object;
 
         set.remove(value);
-        Cabba.writeObjectToFile(set, "cabba/" + name + "/" + key);
+        Util.writeObjectToFile(set, "cabba/" + name + "/" + key);
     }
 
     @Override
     public Set<String> smembers(String key) {
-        Object object = Cabba.readFileToObject("cabba/" + name + "/" + key);
+        Object object = Util.readFileToObject("cabba/" + name + "/" + key);
 
         return !(object instanceof HashSet) ?
                 new HashSet<>() :
@@ -166,7 +167,7 @@ public class DiskDatabase implements Database, Serializable {
 
     @Override
     public boolean scontains(String key, String value) {
-        Object object = Cabba.readFileToObject("cabba/" + name + "/" + key);
+        Object object = Util.readFileToObject("cabba/" + name + "/" + key);
 
         Set<String> set = !(object instanceof HashSet) ?
                 new HashSet<>() :

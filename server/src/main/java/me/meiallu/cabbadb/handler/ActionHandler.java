@@ -12,8 +12,8 @@ import me.meiallu.cabbadb.data.Request;
 import me.meiallu.cabbadb.database.Database;
 import me.meiallu.cabbadb.database.DiskDatabase;
 import me.meiallu.cabbadb.database.MemoryDatabase;
-import me.meiallu.cabbadb.logging.LogType;
-import me.meiallu.cabbadb.logging.Logger;
+import me.meiallu.cabbadb.util.LogType;
+import me.meiallu.cabbadb.util.Util;
 
 import java.nio.charset.StandardCharsets;
 
@@ -118,7 +118,7 @@ public class ActionHandler extends ChannelInboundHandlerAdapter {
                 new DiskDatabase(request.getValues()[0]);
                 break;
         }
-        Logger.log(LogType.INFO, "Received '" + action.name() + "' request.");
+        Util.log(LogType.INFO, "Received '" + action.name() + "' request.");
     }
 
     @Override

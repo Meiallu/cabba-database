@@ -12,13 +12,9 @@ import lombok.Setter;
 import me.meiallu.cabbadb.data.Config;
 import me.meiallu.cabbadb.database.Database;
 import me.meiallu.cabbadb.handler.LoginHandler;
-import me.meiallu.cabbadb.logging.LogType;
-import me.meiallu.cabbadb.logging.Logger;
-import org.apache.commons.io.FileUtils;
+import me.meiallu.cabbadb.util.LogType;
+import me.meiallu.cabbadb.util.Util;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,7 +36,7 @@ public class Cabba {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                Cabba.writeObjectToFile(databases, "cabba/memory.dump");
+                Util.writeObjectToFile(databases, "cabba/memory.dump");
             }
         }, 0, config.save_delay);
 
@@ -58,40 +54,6 @@ public class Cabba {
                 .bind(config.port).channel();
 
         channel.closeFuture();
-        Logger.log(LogType.INFO, "Database initialized successfully. Listening on port " + config.port + ".");
-    }
-
-    public static Object readFileToObject(String path) {
-        try {
-            File file = new File(path);
-            InputStream fileAsStream = new FileInputStream(file);
-
-            String data = new String(fileAsStream.readAllBytes(), StandardCharsets.UTF_8);
-            byte[] byteArray = Base64.getDecoder().decode(data);
-
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(byteArray);
-            ObjectInputStream objectStream = new ObjectInputStream(inputStream);
-
-            return objectStream.readObject();
-        } catch (IOException | ClassNotFoundException exception) {
-            return null;
-        }
-    }
-
-    public static void writeObjectToFile(Object object, String path) {
-        try {
-            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectStream = new ObjectOutputStream(byteStream);
-
-            objectStream.writeObject(object);
-            objectStream.close();
-
-            byte[] bytes = byteStream.toByteArray();
-            String value = Base64.getEncoder().encodeToString(bytes);
-
-            FileUtils.writeStringToFile(new File(path), value, StandardCharsets.UTF_8);
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
+        Util.log(LogType.INFO, "Database initialized successfully. Listening on port " + config.port + ".");
     }
 }

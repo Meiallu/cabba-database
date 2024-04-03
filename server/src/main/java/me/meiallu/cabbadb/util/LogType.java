@@ -1,4 +1,4 @@
-package me.meiallu.cabbadb.logging;
+package me.meiallu.cabbadb.util;
 
 import lombok.Getter;
 

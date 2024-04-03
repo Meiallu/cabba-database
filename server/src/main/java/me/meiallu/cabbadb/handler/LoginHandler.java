@@ -4,8 +4,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import me.meiallu.cabbadb.Cabba;
-import me.meiallu.cabbadb.logging.LogType;
-import me.meiallu.cabbadb.logging.Logger;
+import me.meiallu.cabbadb.util.LogType;
+import me.meiallu.cabbadb.util.Util;
 
 import java.nio.charset.StandardCharsets;
 
@@ -20,12 +20,12 @@ public class LoginHandler extends ChannelInboundHandlerAdapter {
             ctx.pipeline().addAfter("login", "action", new ActionHandler());
             ctx.pipeline().remove("login");
 
-            Logger.log(LogType.INFO, "Client connection attempt successful.");
+            Util.log(LogType.INFO, "Client connection attempt successful.");
         } else {
             ctx.flush();
             ctx.close();
 
-            Logger.log(LogType.INFO, "Client connection attempt failed, using \"" + password + "\".");
+            Util.log(LogType.INFO, "Client connection attempt failed, using \"" + password + "\".");
         }
     }
 

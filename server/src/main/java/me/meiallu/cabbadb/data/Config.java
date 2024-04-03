@@ -5,6 +5,7 @@ import me.meiallu.cabbadb.Cabba;
 import me.meiallu.cabbadb.database.Database;
 import me.meiallu.cabbadb.database.DiskDatabase;
 import me.meiallu.cabbadb.database.MemoryDatabase;
+import me.meiallu.cabbadb.util.Util;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -34,7 +35,7 @@ public class Config {
             File dumpFile = new File("cabba/memory.dump");
 
             if (dumpFile.exists()) {
-                HashMap<String, Database> hash = (HashMap<String, Database>) Cabba.readFileToObject("cabba/memory.dump");
+                HashMap<String, Database> hash = (HashMap<String, Database>) Util.readFileToObject("cabba/memory.dump");
                 Cabba.setDatabases(hash);
             } else {
                 Cabba.setDatabases(new HashMap<>());
